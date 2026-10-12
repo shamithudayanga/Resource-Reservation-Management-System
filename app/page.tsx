@@ -81,30 +81,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Database Exclusion Constraint Badge Banner */}
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-teal-50 to-emerald-50 dark:from-teal-950/40 dark:to-emerald-950/30 border border-teal-200/60 dark:border-teal-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-teal-600/10 dark:bg-teal-400/10 text-teal-700 dark:text-teal-300 flex items-center justify-center shrink-0">
-            <ShieldCheck className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-          </div>
-          <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
-              Strict Database-Level Concurrency Protection
-            </h4>
-            <p className="text-xs text-slate-600 dark:text-slate-400">
-              PostgreSQL <code className="bg-teal-100 dark:bg-teal-900/60 px-1 py-0.5 rounded text-[11px] font-mono text-teal-800 dark:text-teal-200">btree_gist EXCLUDE</code> constraint prevents double-booking race conditions under high concurrency.
-            </p>
-          </div>
-        </div>
-        <Link
-          href="/availability"
-          className="text-xs font-semibold text-teal-700 dark:text-teal-300 hover:underline flex items-center gap-1 shrink-0 self-start sm:self-center"
-        >
-          <span>View Availability Timeline</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
-
+     
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {/* Total Resources */}
