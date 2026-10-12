@@ -1,0 +1,50 @@
+// prisma/schema.prisma
+// SQLite-based schema for zero-dependency local development.
+// To use PostgreSQL in production, change provider to "postgresql" and
+// restore the btree_gist EXCLUDE constraint in a migration.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// NOTE: SQLite does not support Postgres-specific ENUMs.
+// We store these as plain String fields and validate with Zod + application layer.
+
+model Resource {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  /// ROOM | EQUIPMENT | VEHICLE
+  type        String
+  capacity    Int
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  reservations Reservation[]
+
+  @@map("resources")
+}
+
+model Reservation {
+  id         String   @id @default(cuid())
+  resourceId String   @map("resource_id")
+  bookedBy   String   @map("booked_by")
+  purpose    String
+  startTime  DateTime @map("start_time")
+  endTime    DateTime @map("end_time")
+  /// CONFIRMED | CANCELLED
+  status     String   @default("CONFIRMED")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@index([resourceId, startTime, endTime])
+  @@map("reservations")
+}
